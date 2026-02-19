@@ -51,6 +51,7 @@
     }
 
     *{ box-sizing:border-box; }
+    [hidden]{ display:none !important; }
     html{ scroll-behavior:smooth; }
     body{
       margin:0;
@@ -498,9 +499,13 @@
     @media (max-width: 680px){
       .nav-links{ display:none; }
       .menu-btn{ display:inline-flex; }
+      /* Hide redundant "Let's talk" CTA from nav to prevent overflow */
+      .nav-cta .btn-primary{ display:none; }
       .service{ grid-column: span 12; }
       .form-row{ grid-template-columns: 1fr; }
-      .mobile-menu{
+      /* Prevent iOS auto-zoom on form inputs */
+      input, textarea, select{ font-size: 16px; }
+      .mobile-menu:not([hidden]){
         display:grid;
         gap: 8px;
         padding: 12px 0 16px;
@@ -518,6 +523,13 @@
       }
       .mobile-menu a:focus{ outline:none; box-shadow: var(--focus); }
       .mobile-menu a:hover{ color: var(--text); background: var(--panel-strong); }
+    }
+
+    @media (max-width: 380px){
+      /* Very small screens: tighten spacing and ensure nothing overflows */
+      .brand span{ font-size: 14px; }
+      .hero-actions{ flex-direction: column; }
+      .hero-actions .btn{ width: 100%; justify-content: center; }
     }
 
     @media (prefers-reduced-motion: reduce){
