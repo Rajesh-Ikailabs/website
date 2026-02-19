@@ -12,6 +12,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Apply theme before page renders to avoid flash of wrong theme -->
+  <script>
+    (function(){
+      var saved;
+      try { saved = localStorage.getItem("ikai-theme"); } catch(e) {}
+      if (saved) {
+        document.documentElement.setAttribute("data-theme", saved);
+      } else {
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+      }
+    })();
+  </script>
+
   <style>
     :root{
       --bg: #0b1020;
@@ -359,6 +373,7 @@
       place-items:center;
     }
     .icon svg{ width: 20px; height: 20px; }
+    .icon-btn svg{ width: 20px; height: 20px; }
 
     /* About + Values */
     .about{
@@ -905,8 +920,6 @@
   <script>
     // Theme: default follows system; user toggle stored
     (function initTheme(){
-      const saved = localStorage.getItem("ikai-theme");
-      if (saved) document.documentElement.setAttribute("data-theme", saved);
       document.getElementById("themeBtn").addEventListener("click", () => {
         const current = document.documentElement.getAttribute("data-theme");
         const next = current === "light" ? "dark" : "light";
